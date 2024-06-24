@@ -5,6 +5,7 @@ import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import { UserDetailsContext } from "./(routes)/_context/UserDetailsContext";
 import { useState } from "react";
+import { Toaster } from "@/components/ui/toaster";
 
 const outfit = Outfit({ subsets: ["latin"] });
 
@@ -20,8 +21,12 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <UserDetailsContext.Provider value={{userDetails, setUserDetails}}>
         <html lang="en">
-          <body className={outfit.className}>{children}</body>
+          <body className={outfit.className}>
+            {children}
+            <Toaster />
+          </body>
         </html>
+        
       </UserDetailsContext.Provider>
     </ClerkProvider>
   );

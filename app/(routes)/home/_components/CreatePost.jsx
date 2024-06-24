@@ -4,12 +4,14 @@ import { useUser } from '@clerk/nextjs'
 import { Image, Send, Video } from 'lucide-react';
 import React, { useContext, useState } from 'react'
 import { UserDetailsContext } from '../../_context/UserDetailsContext';
+import { useToast } from '@/components/ui/use-toast';
 
 const CreatePost = () => {
 
     const {user} = useUser();
     const [userInputPost, setUserInputPost] = useState();
     const {userDetails, setUserDetails} = useContext(UserDetailsContext);
+    const {toast} = useToast();
 
     const onCreatePost = () => {
         const data = {
@@ -19,8 +21,20 @@ const CreatePost = () => {
         }
 
         GlobalApi.createPost(data).then(resp => {
-            console.log(resp)
-        })
+            console.log(resp);
+            setUserInputPost('');
+            resp && toast({
+                title: "Awesome!",
+                description: "Your Post has been published successfully.",
+                variant : "success"
+              })
+        }, (error) => {
+            toast({
+                title: "OOPS !!!!",
+                description: "Some Server Side Error",
+                variant : "destructive"
+              })
+    })
     }
 
   return (
@@ -34,6 +48,7 @@ const CreatePost = () => {
             <div className='p-4 bg-white rounded-lg'>
                 <textarea placeholder="What's up" 
                     className='w-full outline-none'
+                    value={userInputPost}
                     onChange={(e) => setUserInputPost(e.target.value)}
                 />
             </div>
