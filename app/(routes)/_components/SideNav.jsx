@@ -12,13 +12,13 @@ function SideNav({toggleSideBar}) {
   return (
     <div className=' h-full p-5 '>
         <Image src='/logo.svg' alt='logo'
-        width={280}
+        width={140}
  
-        height={200}/>
+        height={140}/>
 
         <div className='flex flex-col mt-10'>
             {MenuList.map((item,index)=>(  
-              <Link href={item.path} onClick={()=>toggleSideBar(false)}>
+              <Link key={index} href={item.path} onClick={()=>toggleSideBar(false)}>
                 <h2 variant="ghost" 
                 className="group p-4 flex gap-5 items-center
                 justify-start rounded-md cursor-pointer
