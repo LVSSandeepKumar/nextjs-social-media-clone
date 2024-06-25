@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useEffect } from "react";
 import GlobalApi from "./_utils/GlobalApi";
 import { useUser } from "@clerk/nextjs";
-import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 export default function Home() {
   const { user } = useUser();
