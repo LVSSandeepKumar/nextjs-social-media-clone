@@ -27,7 +27,7 @@ function Home() {
     <div className='p-5 px-10'>
       { !user ? <Banner />
       : <CreatePost getAllPosts={() => getAllPosts()} /> }      
-      <PostList postList={postList}/>
+      <PostList postList={postList} updatePostList={() => getAllPosts()}/>
     </div>
   )
 }
