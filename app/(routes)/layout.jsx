@@ -9,7 +9,7 @@ import { UserDetailsContext } from "./_context/UserDetailsContext";
 function layout({ children }) {
   const [toggleSideBar, setToggleSideBar] = useState(true);
   const { user } = useUser();
-  const {userDetails, setUserDetails} = useContext(UserDetailsContext)
+  const { userDetails, setUserDetails } = useContext(UserDetailsContext);
 
   const getUserDetails = () => {
     GlobalApi.getUserByEmail(user.primaryEmailAddress.emailAddress).then(
@@ -23,22 +23,21 @@ function layout({ children }) {
     user && getUserDetails();
   }, [user]);
 
-
-
-
   return (
     <div>
       {/* This side bar used when screen size is medium or larger  */}
-      <div className=" hidden md:w-64 md:block h-screen fixed">
-        <SideNav />
-      </div>
+
       {/* This side bar used when screen size is smaller/mobile  */}
-      {toggleSideBar && (
+      {toggleSideBar ? (
         <div
           className="bg-white absolute md:w-64 md:block h-screen 
         animate-in duration-700"
         >
           <SideNav toggleSideBar={() => setToggleSideBar(false)} />
+        </div>
+      ) : (
+        <div className=" hidden md:w-64 md:block h-screen fixed">
+          <SideNav />
         </div>
       )}
 

@@ -12,7 +12,7 @@ function SideNav({ toggleSideBar }) {
   const { user } = useUser();
 
   return (
-    <div className=" h-full p-5 border ">
+    <div className=" h-full p-5 border  ">
       <Image src="/logo.svg" alt="logo" width={140} height={140} />
 
       <div className="flex flex-col mt-10">
@@ -47,7 +47,7 @@ function SideNav({ toggleSideBar }) {
           </Link>
         ) : (
           <div className="flex items-center gap-3">
-            <UserButton /> <span className="text-slate-500">Profile</span>
+            <UserButton />Profile
           </div>
         )}
       </div>
