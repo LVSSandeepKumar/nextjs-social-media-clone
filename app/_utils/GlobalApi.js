@@ -9,6 +9,7 @@ const createUser = (data) => axiosClient.post("/user", data);
 const getUserByEmail = (email) => axiosClient.get("/user/" + email);
 
 const createPost = (data) => axiosClient.post('/post', data);
+const deletePost = (postId) => axiosClient.delete('/post/' + postId);
 const getAllPosts = () => axiosClient.get('/post');
 const onPostLike = (postId, data) => axiosClient.put('/post/like/' + postId,data );
 const addComment = (data) => axiosClient.post('/comment', data);
@@ -21,5 +22,6 @@ export default {
   getAllPosts,
   onPostLike,
   addComment,
-  deleteComment
+  deleteComment,
+  deletePost
 };

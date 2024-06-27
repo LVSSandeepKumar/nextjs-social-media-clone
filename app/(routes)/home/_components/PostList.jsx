@@ -1,5 +1,4 @@
-import GlobalApi from "@/app/_utils/GlobalApi";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PostItem from "./PostItem";
 import { Skeleton } from "@/components/ui/skeleton";
 

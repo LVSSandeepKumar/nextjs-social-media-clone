@@ -4,20 +4,23 @@ import React, { useContext, useState } from "react";
 import { UserDetailsContext } from "../../_context/UserDetailsContext";
 import GlobalApi from "@/app/_utils/GlobalApi";
 import { useUser } from "@clerk/nextjs";
-import { Send } from "lucide-react";
+import { MoreVertical, Send, Trash } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { toast } from "@/components/ui/use-toast";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
-  AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import CommentList from "./CommentList";
 
 const PostItem = ({ post, updatePostList }) => {
@@ -62,23 +65,53 @@ const PostItem = ({ post, updatePostList }) => {
     setUserInputComment("");
   };
 
+  const deletePost = () => {
+    GlobalApi.deletePost(post._id).then((resp) => {
+        if (resp) {
+          toast({
+            title: "Done !!",
+            description: "Post deleted successfully.",
+          });
+        }
+        updatePostList();
+    });
+  };
+
   return (
     <div className="p-5 border rounded-lg my-5">
-      <div className="flex gap-2 items-center">
-        <Image
-          src={post?.createdBy.image}
-          alt="user image"
-          height={35}
-          width={35}
-          className="rounded-full"
-        />
+      <div className="flex justify-between">
+        <div className="flex gap-2 items-center">
+          <Image
+            src={post?.createdBy.image}
+            alt="user image"
+            height={35}
+            width={35}
+            className="rounded-full"
+          />
 
-        <div>
-          <h2 className="font-bold">{post?.createdBy.name}</h2>
-          <h2 className="text-[12px] text-gray-500">
-            {moment(Number(post?.createdAt)).format("DD MMM | hh:mm A")}
-          </h2>
+          <div>
+            <h2 className="font-bold">{post?.createdBy.name}</h2>
+            <h2 className="text-[12px] text-gray-500">
+              {moment(Number(post?.createdAt)).format("DD MMM | hh:mm A")}
+            </h2>
+          </div>
         </div>
+        {post.createdBy?._id == userDetails?._id && (
+          <Popover>
+            <PopoverTrigger>
+              <MoreVertical className="h-5 w-5 cursor-pointer" />
+            </PopoverTrigger>
+            <PopoverContent>
+              <Button
+                className="flex gap-2 w-full"
+                variant="outline"
+                onClick={() => deletePost(post)}
+              >
+                <Trash /> Delete
+              </Button>
+            </PopoverContent>
+          </Popover>
+        )}
       </div>
 
       <div className="bg-slate-100 p-3 mt-4 rounded-lg">
@@ -139,9 +172,12 @@ const PostItem = ({ post, updatePostList }) => {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <AlertDialogTitle className="flex items-center justify-between">Comments <AlertDialogCancel>x</AlertDialogCancel> </AlertDialogTitle>
+              <AlertDialogTitle className="flex items-center justify-between">
+                Comments <AlertDialogCancel>x</AlertDialogCancel>{" "}
+              </AlertDialogTitle>
               <AlertDialogDescription>
-                <CommentList commentList={post?.comments} 
+                <CommentList
+                  commentList={post?.comments}
                   updatePostList={() => updatePostList()}
                 />
               </AlertDialogDescription>
