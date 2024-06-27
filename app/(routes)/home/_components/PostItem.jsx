@@ -141,7 +141,9 @@ const PostItem = ({ post, updatePostList }) => {
             <AlertDialogHeader>
               <AlertDialogTitle className="flex items-center justify-between">Comments <AlertDialogCancel>x</AlertDialogCancel> </AlertDialogTitle>
               <AlertDialogDescription>
-                <CommentList commentList={post?.comments} />
+                <CommentList commentList={post?.comments} 
+                  updatePostList={() => updatePostList()}
+                />
               </AlertDialogDescription>
             </AlertDialogHeader>
           </AlertDialogContent>
